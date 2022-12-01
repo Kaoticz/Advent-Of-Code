@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 
 namespace _01;
 
-internal class Program
+internal sealed class Program
 {
     private readonly static string _inputLocation = Path.Combine("Data", "input.txt");
 
