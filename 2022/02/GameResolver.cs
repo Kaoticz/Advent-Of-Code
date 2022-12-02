@@ -43,16 +43,6 @@ internal static class GameResolver
     }
 
     /// <summary>
-    /// Gets the outcome of a game given the specified bets.
-    /// </summary>
-    /// <param name="playerBet">The player's bet.</param>
-    /// <param name="elfBet">The elf's bet.</param>
-    /// <returns>The outcome of the game.</returns>
-    /// <exception cref="UnreachableException">Occurs when one of the parameters is not recognized.</exception>
-    public static Outcome ResolveOutcome(char playerBet, char elfBet)
-        => ResolveOutcome(ParseBet(playerBet), ParseBet(elfBet));
-
-    /// <summary>
     /// Gets the outcome of a game for the specified bets.
     /// </summary>
     /// <param name="playerBet">The player's bet.</param>
@@ -75,16 +65,6 @@ internal static class GameResolver
             _ => throw new UnreachableException($"Player bet of value {playerBet} is unknown.")
         };
     }
-
-    /// <summary>
-    /// Resolves the appropriate player bet given the specified opponent's bet and the desired game outcome.
-    /// </summary>
-    /// <param name="elfBet">The opponent's bet.</param>
-    /// <param name="gameOutcome">The desired game outcome.</param>
-    /// <returns>The bet that should be played.</returns>
-    /// <exception cref="UnreachableException">Occurs when one of the parameters is not recognized.</exception>
-    public static BetType ResolvePlayerBet(char elfBet, char gameOutcome)
-        => ResolvePlayerBet(ParseBet(elfBet), ParseOutcome(gameOutcome));
 
     /// <summary>
     /// Resolves the appropriate player bet given the specified opponent's bet and the desired game outcome.
