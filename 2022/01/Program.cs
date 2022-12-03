@@ -12,8 +12,7 @@ internal sealed class Program
         var result = input.Split(Environment.NewLine + Environment.NewLine)
             .Select(caloriesGroup =>
                 caloriesGroup.Split(Environment.NewLine)
-                    .Select(int.Parse)
-                    .Sum()
+                    .Sum(int.Parse)
             )
             .OrderDescending()
             .Take(3)

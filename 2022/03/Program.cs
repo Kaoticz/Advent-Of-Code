@@ -8,7 +8,6 @@ internal sealed class Program
     {
         var input = await File.ReadAllLinesAsync(_inputLocation);
         var result1 = input.Sum(x => ParsePriority(FindItemType(x)));
-
         var result2 = input
             .Chunk(3)
             .Sum(x => ParsePriority(FindRucksackBadge(x)));
@@ -38,7 +37,7 @@ internal sealed class Program
     /// </summary>
     /// <param name="rucksacks">The rucksacks to search in.</param>
     /// <returns>The badge priority char of the rucksacks.</returns>
-    private static char FindRucksackBadge(string[] rucksacks)
+    private static char FindRucksackBadge(IReadOnlyList<string> rucksacks)
     {
         return rucksacks
             .SelectMany(x => x)
@@ -52,7 +51,7 @@ internal sealed class Program
     /// <returns>The priority value of <paramref name="priorityChar"/>.</returns>
     private static int ParsePriority(char priorityChar)
     {
-        return char.IsLower(priorityChar)
+        return (char.IsLower(priorityChar))
             ? priorityChar - 'a' + 1
             : priorityChar - 'A' + 27;
     }
