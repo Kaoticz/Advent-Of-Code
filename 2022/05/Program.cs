@@ -36,9 +36,9 @@ internal sealed class Program
 
         for (var stackIndex = 0; stackIndex < stacks.Length; stackIndex++)
         {
-            for (var crateLine = crateLines.Length - 1; crateLine >= 0; crateLine--)
+            for (var crateLineIndex = crateLines.Length - 1; crateLineIndex >= 0; crateLineIndex--)
             {
-                var crate = crateLines[crateLine][(stackIndex * 4) + 1];
+                var crate = crateLines[crateLineIndex][(stackIndex * 4) + 1];
 
                 if (char.IsWhiteSpace(crate))
                     break;
@@ -57,10 +57,8 @@ internal sealed class Program
     /// <returns>The amount of stacks required by the instructions.</returns>
     private static int ParseStackAmount(string stackIdentifiers)
     {
-        var test = stackIdentifiers.Split(' ')
+        return stackIdentifiers.Split(' ')
             .Count(x => int.TryParse(x, out _));
-
-        return test;
     }
 
     /// <summary>
@@ -86,7 +84,7 @@ internal sealed class Program
     private static void MoveCrates(IReadOnlyList<Stack<char>> stacks, Instruction instruction)
     {
         for (var operation = 0; operation < instruction.Amount; operation++)
-            stacks[instruction.ToStack].Push(stacks[instruction.FromStack].Pop());
+            stacks[instruction.DestinationStack].Push(stacks[instruction.SourceStack].Pop());
     }
 
     /// <summary>
@@ -100,10 +98,10 @@ internal sealed class Program
 
         // Pull creates from origin stack
         for (var counter = 0; counter < instruction.Amount; counter++)
-            tempStack.Push(stacks[instruction.FromStack].Pop());
+            tempStack.Push(stacks[instruction.SourceStack].Pop());
 
         // Place crates on destination stack
         for (var counter = 0; counter < instruction.Amount; counter++)
-            stacks[instruction.ToStack].Push(tempStack.Pop());
+            stacks[instruction.DestinationStack].Push(tempStack.Pop());
     }
 }
