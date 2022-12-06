@@ -12,6 +12,12 @@ internal sealed class Program
         Console.WriteLine($"Second answer: {MarkerEndsAt(input, 14)}");
     }
 
+    /// <summary>
+    /// Finds a marker in <paramref name="text"/> with the specified <paramref name="markerLength"/>.
+    /// </summary>
+    /// <param name="text">The text to be analyzed.</param>
+    /// <param name="markerLength">The length of the marker.</param>
+    /// <returns>The index in <paramref name="text"/> where the marker ends, -1 if no marker is found.</returns>
     private static int MarkerEndsAt(string text, int markerLength)
     {
         for (var index = 0; index < text.Length; index++)
