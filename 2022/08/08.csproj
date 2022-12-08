@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Kotz.Collections" Version="2.1.0-nightly-033" />
+    <PackageReference Include="Kotz.Extensions" Version="2.1.0-nightly-033" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Data\input.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
