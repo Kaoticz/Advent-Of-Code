@@ -13,15 +13,15 @@ internal sealed class Program
     {
         var input = await File.ReadAllLinesAsync(_inputLocation);
         var fileSystem = ExecuteCommands(ParseCommands(input));
-        var minimumSpaceRequired = _spaceRequired - (_totalSpace - CalculateRootSize(fileSystem));
+        var minimumSpaceToFree = _spaceRequired - (_totalSpace - CalculateRootSize(fileSystem));
         var result1 = fileSystem
-            .Select(x => (Directory: x.Key, Size: CalculateDirectorySize(fileSystem, x.Key)))
-            .Where(x => x.Size <= 100000)
-            .Sum(x => x.Size);
+            .Select(x => CalculateDirectorySize(fileSystem, x.Key))
+            .Where(x => x <= 100000)
+            .Sum();
 
         var result2 = fileSystem
             .Select(x => CalculateDirectorySize(fileSystem, x.Key))
-            .Where(x => x >= minimumSpaceRequired)
+            .Where(x => x >= minimumSpaceToFree)
             .Min();
 
         Console.WriteLine($"First answer: {result1}");
@@ -74,7 +74,7 @@ internal sealed class Program
             else if (command.InputCommand.StartsWith("ls"))
                 fileSystem.Add(currentDir, ExecuteLsCommand(command));
             else
-                throw new InvalidOperationException($"Command {command.InputCommand} is not recognized.");
+                throw new InvalidOperationException($"Command '{command.InputCommand}' is not recognized.");
         }
 
         return fileSystem;
@@ -94,7 +94,7 @@ internal sealed class Program
 
         if (command.InputCommand.Contains(".."))
         {
-            var lastPathSeparator = (currentDir.LastIndexOf(Path.DirectorySeparatorChar) == 0)
+            var lastPathSeparator = (currentDir.LastIndexOf(Path.DirectorySeparatorChar) is 0)
                 ? 1
                 : currentDir.LastIndexOf(Path.DirectorySeparatorChar);
 
@@ -102,7 +102,7 @@ internal sealed class Program
         }
         else
         {
-            currentDir = (command.InputCommand[3..] == "/")
+            currentDir = (command.InputCommand[3..] is "/")
                 ? Path.DirectorySeparatorChar.ToString()
                 : Path.Combine(currentDir, command.InputCommand[3..]);
         }
