@@ -107,10 +107,10 @@ internal sealed class Program
     {
         return direction switch
         {
-            Direction.Up => headKnot with { X = headKnot.X - 1 },
-            Direction.Down => headKnot with { X = headKnot.X + 1 },
-            Direction.Left => headKnot with { Y = headKnot.Y - 1 },
-            Direction.Right => headKnot with { Y = headKnot.Y + 1 },
+            Direction.Up => headKnot with { Y = headKnot.Y + 1 },
+            Direction.Down => headKnot with { Y = headKnot.Y - 1 },
+            Direction.Left => headKnot with { X = headKnot.X - 1 },
+            Direction.Right => headKnot with { X = headKnot.X + 1 },
             _ => throw new UnreachableException($"Direction of type '{direction}' is unknown.")
         };
     }
@@ -123,33 +123,23 @@ internal sealed class Program
     /// <returns>The new position of the tail knot.</returns>
     private static Position MoveTailKnot(Position headKnot, Position tailKnot)
     {
-        // If head and tail are adjacent or overlapping, don't move the tail
-        if (headKnot == tailKnot || IsKnotAdjacent(headKnot, tailKnot))
-            return tailKnot;
-        else if (headKnot.X == tailKnot.X)                  // Vertical movements
-        {
-            return (headKnot.Y > tailKnot.Y)
-                ? new(headKnot.X, headKnot.Y - 1)        // Move tail to the right
-                : new(headKnot.X, headKnot.Y + 1);       // Move tail to the left
-        }
-        else if (headKnot.Y == tailKnot.Y)
-        {
-            return (headKnot.X > tailKnot.X)
-                ? new(headKnot.X - 1, headKnot.Y)        // Move tail downwards
-                : new(headKnot.X + 1, headKnot.Y);       // Move tail upwards
-        }
-        else if (headKnot.X > tailKnot.X)                   // Diagonal movements
-        {
-            return (headKnot.Y > tailKnot.Y)
-                ? new(tailKnot.X + 1, tailKnot.Y + 1)    // Move tail to bottom right
-                : new(tailKnot.X + 1, tailKnot.Y - 1);   // Move tail to bottom left
-        }
-        else
-        {
-            return (headKnot.Y > tailKnot.Y)
-                ? new(tailKnot.X - 1, tailKnot.Y + 1)    // Move tail to top right
-                : new(tailKnot.X - 1, tailKnot.Y - 1);   // Move tail to top left
-        }
+        return (IsKnotAdjacent(headKnot, tailKnot))
+            ? tailKnot
+            : (Math.Clamp(headKnot.X - tailKnot.X, -1, 1), Math.Clamp(headKnot.Y - tailKnot.Y, -1, 1)) switch
+            {
+                // .::Vertical Movements::.
+                ( 0,  1) => new(tailKnot.X, tailKnot.Y + 1),        // Move tail upwards
+                ( 0, -1) => new(tailKnot.X, tailKnot.Y - 1),        // Move tail downwards 
+                ( 1,  0) => new(tailKnot.X + 1, tailKnot.Y),        // Move tail to the right
+                (-1,  0) => new(tailKnot.X - 1, tailKnot.Y),        // Move tail to the left
+
+                // .::Diagonal Movements::.
+                (-1, -1) => new(tailKnot.X - 1, tailKnot.Y - 1),    // Move tail to bottom left
+                (-1,  1) => new(tailKnot.X - 1, tailKnot.Y + 1),    // Move tail to top left 
+                ( 1, -1) => new(tailKnot.X + 1, tailKnot.Y - 1),    // Move tail to bottom right
+                ( 1,  1) => new(tailKnot.X + 1, tailKnot.Y + 1),    // Move tail to top right
+                _ => tailKnot   // Don't move the tail if head and tail overlap each other
+            };
     }
 
     /// <summary>
@@ -160,7 +150,7 @@ internal sealed class Program
     /// <returns><see langword="true"/> if the knots are next to each other, <see langword="false"/> otherwise.</returns>
     private static bool IsKnotAdjacent(Position headKnot, Position tailKnot)
     {
-        return tailKnot.X <= headKnot.X + 1 && tailKnot.X >= headKnot.X - 1
-            && tailKnot.Y <= headKnot.Y + 1 && tailKnot.Y >= headKnot.Y - 1;
+        return tailKnot.Y <= headKnot.Y + 1 && tailKnot.Y >= headKnot.Y - 1
+            && tailKnot.X <= headKnot.X + 1 && tailKnot.X >= headKnot.X - 1;
     }
 }
