@@ -6,7 +6,12 @@
     <RootNamespace>_11</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Kotz.Extensions" Version="2.1.0-nightly-033" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Update="Data\input.txt">
