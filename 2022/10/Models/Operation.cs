@@ -7,4 +7,4 @@ namespace _10.Models;
 /// </summary>
 /// <param name="Type">The type of the operation.</param>
 /// <param name="ToAdd">The value to be added to X register.</param>
-internal record struct Operation(OperationType Type, int ToAdd);
+internal sealed record struct Operation(OperationType Type, int ToAdd);

@@ -8,4 +8,4 @@ namespace _10.Models;
 /// <param name="Id">The Id of the cycle.</param>
 /// <param name="Type">The type of the operation that is being executed in this cycle.</param>
 /// <param name="XValue">The current value in the X register.</param>
-internal record Cycle(int Id, OperationType Type, int XValue);
+internal sealed record Cycle(int Id, OperationType Type, int XValue);

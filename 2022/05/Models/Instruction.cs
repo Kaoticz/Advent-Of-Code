@@ -1,4 +1,4 @@
-namespace _05;
+namespace _05.Models;
 
 /// <summary>
 /// Represents an instruction on how to move crates across crate stacks.

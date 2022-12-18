@@ -5,7 +5,7 @@ namespace _07;
 
 internal sealed class Program
 {
-    private readonly static string _inputLocation = Path.Combine("Data", "input.txt");
+    private static readonly string _inputLocation = Path.Combine("Data", "input.txt");
     private const int _totalSpace = 70000000;
     private const int _spaceRequired = 30000000;
 

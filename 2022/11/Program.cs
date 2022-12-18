@@ -6,7 +6,7 @@ namespace _11;
 
 internal sealed class Program
 {
-    private readonly static string _inputLocation = Path.Combine("Data", "input.txt");
+    private static readonly string _inputLocation = Path.Combine("Data", "input.txt");
 
     private static async Task Main()
     {

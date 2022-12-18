@@ -1,10 +1,11 @@
+using _05.Models;
 using System.Collections.Immutable;
 
 namespace _05;
 
 internal sealed class Program
 {
-    private readonly static string _inputLocation = Path.Combine("Data", "input.txt");
+    private static readonly string _inputLocation = Path.Combine("Data", "input.txt");
 
     private static async Task Main()
     {

@@ -5,4 +5,4 @@ namespace _07.Models;
 /// </summary>
 /// <param name="Name">The name of the file.</param>
 /// <param name="Size">The size of the file, in bytes.</param>
-internal record SystemFile(string Name, int Size);
+internal sealed record SystemFile(string Name, int Size);
